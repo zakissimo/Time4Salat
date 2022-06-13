@@ -9,7 +9,7 @@ import requests
 home = os.path.expanduser("~")
 
 
-def get_time():
+def main():
 
     now = datetime.now()
     today_string = now.strftime("%D")
@@ -72,4 +72,4 @@ def get_next_salat(now, time_string):
 
 
 if __name__ == "__main__":
-    get_time()
+    main()
