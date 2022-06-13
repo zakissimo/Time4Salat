@@ -66,9 +66,11 @@ def get_next_salat(now, time_string):
     for t in time_list:
         delta = str(t - now)
         if str(delta)[0] != "-":
-            return print(delta[:4])
+            print(delta[:4])
+            return delta[:4]
 
-    return print(str(time_list[0])[11:-3])
+    print(str(time_list[0])[11:-3])
+    return str(time_list[0])[11:-3]
 
 
 if __name__ == "__main__":
