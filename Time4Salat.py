@@ -2,6 +2,7 @@
 
 import os
 import re
+import json
 from datetime import datetime
 import requests
 
@@ -12,18 +13,18 @@ def get_time():
 
     now = datetime.now()
     today_string = now.strftime("%D")
-    log_path = f"{home}/.config/qtile/scripts/Time4Salat.log"
+    log_path = "./Time4Salat.json"
 
     if not os.path.exists(log_path) or not os.path.getsize(log_path):
         make_log(log_path, today_string)
 
     with open(log_path, "r", encoding="utf8") as log_file:
 
-        log_load = [l.strip() for l in log_file]
-        salat_time = log_load[1][1:-
-                                 1].replace('"', "").replace("'", "").split(", ")
+        log_load = json.load(log_file)
+        salat_time = log_load["salat_table"][1:-
+                                             1].replace('"', "").replace("'", "").split(", ")
 
-        if log_load[0] == today_string:
+        if log_load["today"] == today_string:
             get_next_salat(now, salat_time)
         else:
             make_log(log_path, today_string)
@@ -32,13 +33,13 @@ def get_time():
 
 def make_log(log_path, today_string):
 
+    to_encode = {
+        "today": today_string,
+        "salat_table": parse()
+    }
+
     with open(log_path, "w", encoding="utf8") as log_file:
-
-        encode = today_string + "\n" + parse()
-
-        log_file.seek(0)
-        log_file.truncate()
-        log_file.write(encode)
+        json.dump(to_encode, log_file)
 
 
 def parse():
