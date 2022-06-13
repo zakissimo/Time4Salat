@@ -1,7 +1,5 @@
 # Time4Salat
 
----
-
 Time4Salat is a small python script that scrapes [mawaqit](https://mawaqit.net) and parses the website to determine when is the next islamic prayer.
 
 Salat means prayer in arabic.
